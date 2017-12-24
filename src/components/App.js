@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../assets/styles/App.scss';
-
+import '../../lib/app/assets/styles/App.scss';
 
 const App = ({ name }) => {
-  return (
-    <h1>Hello, {name}!</h1>
-  );
+	return <h1>Hello, {name}!</h1>;
 };
 
 App.propTypes = {
-  name: PropTypes.string,
+	name: PropTypes.string
 };
 
 export default App;
