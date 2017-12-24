@@ -1,0 +1,48 @@
+@import 'colors';
+
+@mixin vertical-align($position: absolute) {
+	position: $position;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+@mixin no-user-select($user-select: none) {
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+@mixin center($position: absolute) {
+	position: $position;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translateY(-50%) translateX(-50%);
+	-ms-transform: translateY(-50%) translateX(-50%);
+	transform: translateY(-50%) translateX(-50%);
+}
+@mixin create_background_transition() {
+	background-color: none;
+	-webkit-transition: background-color 200ms ease-out 0s;
+	-moz-transition: background-color 200ms ease-out 0s;
+	-o-transition: background-color 200ms ease-out 0s;
+	transition: background-color 200ms ease-out 0s;
+}
+
+@mixin apply_background_transition() {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+@mixin start_icon_transition() {
+	color: $off-white;
+	-webkit-transition: background-color 300ms ease-out 0s;
+	-moz-transition: background-color 300ms ease-out 0s;
+	-o-transition: background-color 300ms ease-out 0s;
+	transition: background-color 300ms ease-out 0s;
+}
+
+@mixin end_icon_transition() {
+	color: lighten($off-white, 20%);
+}

@@ -1,31 +1,4 @@
-# require 'rest-client'
-
 helpers do
-  # def return_subscribe_errors(user, comment)
-  #   binding.pry
-  #   return (
-  #     "<div class='form-errors'>
-  #       <div>
-  #         #{<% user.errors.messages.each do |attribute, messages| %>}
-  #           <div>
-  #             <strong>
-  #               <%= attribute.to_s.humanize %>
-  #             </strong>
-  #             <%= '#{messages.to_sentence}.' %>
-  #           </div>
-  #         <% end %>
-  #         #{<% comment.errors.messages.each do |attribute, messages| %>}
-  #           <div>
-  #             <strong>
-  #               <%= attribute.to_s.humanize %>
-  #             </strong>
-  #             <%= '#{messages.to_sentence}.' %>
-  #           </div>
-  #         <% end %>
-  #       </div>
-  #     </div>"
-  #   )
-  # end
 
   def post_new_user_to_mailchimp(user)
     email = user.email
