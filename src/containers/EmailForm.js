@@ -106,8 +106,14 @@ class EmailForm extends Component {
 	}
 
 	handleArtistSelect(event) {
-		var id = event.target.attributes.value['value'];
-		this.setState({ artists: this.state.artists.concat(id) });
+		var id = event.target.id;
+		var name = event.target.name;
+		this.setState({
+			artists: this.state.artists.concat({
+				id: id,
+				name: name
+			})
+		});
 	}
 
 	handleArtistDelete(event) {
@@ -154,9 +160,9 @@ class EmailForm extends Component {
 
 	handleArtists(event) {
 		var input = event.target.value;
-		this.searchArtists(input);
-		this.validateArtists(input);
-		this.setState({ artists: input });
+		if (this.validateArtists(input)) {
+			this.searchArtists(input);
+		}
 	}
 
 	handleGenres(event) {
@@ -371,6 +377,7 @@ class EmailForm extends Component {
 					<div className="button-group">
 						<button className="form-submit-button" type="submit" />
 					</div>
+					{artistList}
 					{artistIcons}
 					<Link to="/">BACK</Link>
 				</form>

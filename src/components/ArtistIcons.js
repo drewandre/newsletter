@@ -5,7 +5,8 @@ const ArtistIcons = props => {
 		return (
 			<div id="artist">
 				<img
-					value={artist.id}
+					id={artist.id}
+					name={artist.name}
 					className="artist-icon"
 					src={artist.image}
 					onClick={props.handleArtistSelect}
