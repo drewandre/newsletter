@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import TextInput from '../components/TextInput';
+import Select from '../components/Select';
 import ArtistIcons from '../components/ArtistIcons';
 import ArtistList from '../components/ArtistList';
 
-// let stringWhiteSpaceTrim = /^\s+|\s+$/g;
+var stringWhiteSpaceTrim = /^\s+|\s+$/g;
+var zipcodeRegexp = /^\d{5}$|^\d{5}-\d{4}$/;
+var onlyIntegers = /^[0-9]*$/;
+var emailRegexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class EmailForm extends Component {
 	constructor(props) {
@@ -20,7 +24,15 @@ class EmailForm extends Component {
 			artists: [],
 			genres: [],
 			searchedArtists: [],
-			searchedGenres: []
+			searchedGenres: [],
+			lastKeyPressedTime: 0,
+			subscriberTypes: [
+				'passive listener',
+				'active listener',
+				'musician',
+				'verified artist',
+				'fan'
+			]
 		};
 
 		this.searchArtists = this.searchArtists.bind(this);
@@ -77,32 +89,34 @@ class EmailForm extends Component {
 	}
 
 	searchArtists(artist) {
-		fetch(`/spotify/artists/${artist}`)
-			.then(response => {
-				if (response.ok) {
-					return response;
-				}
-			})
-			.then(response => response.json())
-			.then(body => {
-				var artist_arr = [];
-				var imageSrc;
-				var id;
-				if (Object.keys(body).length > 0) {
-					for (var i = 0; i < body.length; i++) {
-						id = body[i].id;
-						name = body[i].name;
-						imageSrc = body[i].images;
-						if (imageSrc.length > 0) {
-							imageSrc = body[i].images[0].url;
-						} else {
-							imageSrc = null;
-						}
-						artist_arr.push({ id: id, name: name, image: imageSrc });
+		if (Date.now() - this.state.lastKeyPressedTime > 200) {
+			fetch(`/spotify/artists/${artist}`)
+				.then(response => {
+					if (response.ok) {
+						return response;
 					}
-				}
-				this.setState({ searchedArtists: artist_arr });
-			});
+				})
+				.then(response => response.json())
+				.then(body => {
+					var artist_arr = [];
+					var imageSrc;
+					var id;
+					if (Object.keys(body).length > 0) {
+						for (var i = 0; i < body.length; i++) {
+							id = body[i].id;
+							name = body[i].name;
+							imageSrc = body[i].images;
+							if (imageSrc.length > 0) {
+								imageSrc = body[i].images[0].url;
+							} else {
+								imageSrc = null;
+							}
+							artist_arr.push({ id: id, name: name, image: imageSrc });
+						}
+					}
+					this.setState({ searchedArtists: artist_arr });
+				});
+		}
 	}
 
 	handleArtistSelect(event) {
@@ -122,34 +136,37 @@ class EmailForm extends Component {
 	}
 
 	handleFirstName(event) {
-		// input = event.target.value.replace(/^\s+|\s+$/g, '');
-		var input = event.target.value;
+		var input = event.target.value.replace(stringWhiteSpaceTrim, '');
+		input = input.charAt(0).toUpperCase() + input.slice(1);
 		this.validateFirstName(input);
 		this.setState({ firstName: input });
 	}
 
 	handleLastName(event) {
-		var input = event.target.value;
+		var input = event.target.value.replace(stringWhiteSpaceTrim, '');
+		input = input.charAt(0).toUpperCase() + input.slice(1);
 		this.validateLastName(input);
 		this.setState({ lastName: input });
 	}
 
 	handleEmail(event) {
 		var input = event.target.value;
-		this.validateEmail(input);
+		input = input.toLowerCase();
 		this.setState({ email: input });
 	}
 
 	handleAge(event) {
 		var input = event.target.value;
-		this.validateAge(input);
-		this.setState({ age: input });
+		if (input.length < 3 && input.match(onlyIntegers)) {
+			this.setState({ age: event.target.value });
+		}
 	}
 
 	handleZipcode(event) {
 		var input = event.target.value;
-		this.validateZipcode(input);
-		this.setState({ zipcode: event.target.value });
+		if (input.length < 6 && input.match(onlyIntegers)) {
+			this.setState({ zipcode: event.target.value });
+		}
 	}
 
 	handleSubscriberType(event) {
@@ -159,9 +176,10 @@ class EmailForm extends Component {
 	}
 
 	handleArtists(event) {
-		var input = event.target.value;
-		if (this.validateArtists(input)) {
-			this.searchArtists(input);
+		this.setState({ lastKeyPressedTime: Date.now() });
+		var input = event.target.value.replace(stringWhiteSpaceTrim, '');
+		if (input != '') {
+			setTimeout(() => this.searchArtists(input), 200);
 		}
 	}
 
@@ -202,6 +220,10 @@ class EmailForm extends Component {
 			let newError = { email: 'Email field may not be blank' };
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
+		} else if (!email.match(emailRegexp)) {
+			let newError = { email: 'Email must be valid' };
+			this.setState({ errors: Object.assign(this.state.errors, newError) });
+			return false;
 		} else {
 			let errorState = this.state.errors;
 			delete errorState.email;
@@ -211,6 +233,9 @@ class EmailForm extends Component {
 	}
 
 	validateAge(age) {
+		if ((age[0] = '0')) {
+			age = age.slice(1, age.length);
+		}
 		if (age === '') {
 			let newError = { age: 'Age field may not be blank' };
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
@@ -226,6 +251,10 @@ class EmailForm extends Component {
 	validateZipcode(zipcode) {
 		if (zipcode === '') {
 			let newError = { zipcode: 'Zipcode field may not be blank' };
+			this.setState({ errors: Object.assign(this.state.errors, newError) });
+			return false;
+		} else if (!zipcode.match(zipcodeRegexp)) {
+			let newError = { zipcode: 'Zipcode field may be valid' };
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
 		} else {
@@ -352,6 +381,8 @@ class EmailForm extends Component {
 					<TextInput
 						placeholder="age"
 						name="age"
+						inputType="number"
+						maxLength="2"
 						className="half-width-input"
 						value={this.state.age}
 						handlerFunction={this.handleAge}
@@ -359,15 +390,17 @@ class EmailForm extends Component {
 					<TextInput
 						placeholder="zip"
 						name="zipcode"
+						maxLength="5"
 						className="half-width-input"
 						value={this.state.zipcode}
 						handlerFunction={this.handleZipcode}
 					/>
-					<TextInput
-						placeholder="how would you describe your taste?"
-						name="subscriberType"
-						value={this.state.subscriberType}
+					<Select
 						handlerFunction={this.handleSubscriberType}
+						name="subscriberType"
+						placeholder="what kind of listener are you?"
+						options={this.state.subscriberTypes}
+						selectedOption={this.state.subscriberType}
 					/>
 					<TextInput
 						placeholder="who are your favorite artists?"

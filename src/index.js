@@ -6,6 +6,7 @@ import EmailForm from './containers/EmailForm';
 import SpotifyForm from './containers/SpotifyForm';
 import SoundCloudForm from './containers/SoundCloudForm';
 import '../lib/app/assets/app.scss';
+import '../lib/app/public/javascript/app.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	let reactElement = document.getElementById('root');

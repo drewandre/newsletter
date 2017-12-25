@@ -46,6 +46,16 @@ input:-moz-placeholder {
 	font-size: 20px;
 	color: $cta-background;
 	background-color: $dropdown;
+	border: none;
+	outline: none;
+}
+
+select {
+	@extend .credentials[type='text'];
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: 96%;
 }
 
 .half-width-input {
@@ -56,6 +66,12 @@ input:-moz-placeholder {
 input:not([type='checkbox']) {
 	border: none;
 	outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 .form-submit-button {
@@ -77,18 +93,18 @@ input:not([type='checkbox']) {
 
 #artist {
 	display: inline-block;
-	vertical-align: top;
-	text-align: center;
-	margin: 10px;
-	padding: 0;
-	width: 100px;
-	height: 150px;
+	// vertical-align: top;
+	// text-align: center;
+	// margin: auto;
+	// padding: 0;
+	// width: 120px;
+	// height: 170px;
 }
 
 .artist-icon {
 	background-color: $dropdown;
-	height: 100px;
-	width: 100px;
+	height: 120px;
+	width: 120px;
 	padding: 0;
 	clip-path: circle(50px at center);
 	// box-shadow: 2px 1px 10px red;
