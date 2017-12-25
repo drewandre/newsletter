@@ -1,6 +1,10 @@
 @import 'colors';
 @import 'mixins';
 
+.button-group {
+	margin: 30px auto;
+}
+
 .sign-up {
 	@include vertical-align();
 	display: inline-grid;
@@ -8,21 +12,14 @@
 }
 
 .email-form-container {
+	@include center();
+	text-align: center;
 	margin: 0;
 	padding: 0;
 	display: block;
 	float: right;
 	width: 100%;
 	max-width: 500px;
-	text-align: center;
-}
-
-.email-form {
-	@include vertical-align();
-	// position: fixed;
-	// top: 20%;
-	// right: 6%;
-	@extend .email-form-container;
 }
 
 input::-webkit-input-placeholder {
@@ -41,18 +38,19 @@ input:-moz-placeholder {
 .credentials[type='text'],
 .credentials[type='password'] {
 	margin: 2%;
-	padding: 2%;
-	width: 92%;
-	font-weight: 200;
+	padding: 4%;
+	width: 88%;
+	font-weight: 100;
+	letter-spacing: 2px;
 	border-radius: 7px;
-	font-size: 1.5em;
+	font-size: 20px;
 	color: $cta-background;
 	background-color: $dropdown;
 }
 
 .half-width-input {
 	@extend .credentials[type='text'];
-	width: 42%;
+	width: 38%;
 }
 
 input:not([type='checkbox']) {
@@ -84,6 +82,7 @@ input:not([type='checkbox']) {
 	margin: 10px;
 	padding: 0;
 	width: 100px;
+	height: 150px;
 }
 
 .artist-icon {
@@ -92,15 +91,17 @@ input:not([type='checkbox']) {
 	width: 100px;
 	padding: 0;
 	clip-path: circle(50px at center);
+	// box-shadow: 2px 1px 10px red;
 }
 
-.artist-icon:hover {
-	cursor: pointer;
-	box-shadow: 2px 1px 3px black;
-}
+// #artist:hover {
+// 	cursor: pointer;
+// 	box-shadow: 2px 1px 10px red;
+// }
 
 .saved-artist-list {
 	display: block;
+	margin: 25px auto 12px auto;
 	width: 100%;
 }
 
@@ -115,7 +116,7 @@ input:not([type='checkbox']) {
 }
 
 #artist-icon-list {
-	position: relative;
-	display: flex;
-	overflow: scroll;
+	margin-bottom: 30px;
+	height: 150px;
+	overflow: hidden;
 }

@@ -327,59 +327,59 @@ class EmailForm extends Component {
 
 		return (
 			<div className="email-form-container">
-				<form className="email-form" onSubmit={this.handleFormSubmit}>
+				<form onSubmit={this.handleFormSubmit}>
 					{errorDiv}
 					<TextInput
-						placeholder="First Name"
+						placeholder="first name"
 						name="firstName"
 						className="half-width-input"
 						value={this.state.firstName}
 						handlerFunction={this.handleFirstName}
 					/>
 					<TextInput
-						placeholder="Last Name"
+						placeholder="last name"
 						name="lastName"
 						className="half-width-input"
 						value={this.state.lastName}
 						handlerFunction={this.handleLastName}
 					/>
 					<TextInput
-						placeholder="Email"
+						placeholder="email"
 						name="email"
 						value={this.state.email}
 						handlerFunction={this.handleEmail}
 					/>
 					<TextInput
-						placeholder="Age"
+						placeholder="age"
 						name="age"
 						className="half-width-input"
 						value={this.state.age}
 						handlerFunction={this.handleAge}
 					/>
 					<TextInput
-						placeholder="Zipcode"
+						placeholder="zip"
 						name="zipcode"
 						className="half-width-input"
 						value={this.state.zipcode}
 						handlerFunction={this.handleZipcode}
 					/>
 					<TextInput
-						placeholder="Subscriber Type"
+						placeholder="how would you describe your taste?"
 						name="subscriberType"
 						value={this.state.subscriberType}
 						handlerFunction={this.handleSubscriberType}
 					/>
 					<TextInput
-						placeholder="Artists"
+						placeholder="who are your favorite artists?"
 						name="artists"
 						handlerFunction={this.handleArtists}
 					/>
-					<div className="button-group">
-						<button className="form-submit-button" type="submit" />
-					</div>
 					{artistList}
 					{artistIcons}
-					<Link to="/">BACK</Link>
+					<div className="button-group">
+						<button className="form-submit-button" type="submit" />
+						<Link to="/">BACK</Link>
+					</div>
 				</form>
 			</div>
 		);

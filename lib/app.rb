@@ -35,7 +35,7 @@ namespace '/spotify' do
 
   get '/artists/:artist' do
     content_type :json
-    artists = RSpotify::Artist.search(params['artist'], limit: 8)
+    artists = RSpotify::Artist.search(params['artist'], limit: 4)
     return artists.to_json
   end
 end
