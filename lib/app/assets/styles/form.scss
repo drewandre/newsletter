@@ -1,79 +1,120 @@
 @import 'colors';
 @import 'mixins';
 
-.centered {
-	@include center();
-	width: fit-content;
-	display: flex;
-	pointer-events: none;
-}
-
-.subscribe-description {
-	user-select: all;
-	letter-spacing: 2px;
+.sign-up {
+	@include vertical-align();
+	display: inline-grid;
 	text-align: center;
-	max-width: 500px;
-	font-size: 1.1em;
-	font-weight: 100;
-	line-height: 1.8em;
-	color: $off-white;
-	padding: 20px;
 }
 
-.subscribe-form {
+.email-form-container {
+	margin: 0;
+	padding: 0;
+	display: block;
+	float: right;
+	width: 100%;
+	max-width: 500px;
 	text-align: center;
-	max-width: 500px;
-	padding: 20px;
 }
 
-#subscribe-info {
-	user-select: all;
-	pointer-events: all;
-	font-weight: 400;
+.email-form {
+	@include vertical-align();
+	// position: fixed;
+	// top: 20%;
+	// right: 6%;
+	@extend .email-form-container;
 }
 
-textarea,
-input#subscribe-input {
-	margin: 10px auto;
-	width: 98%;
-	height: 40px;
-	max-width: 85%;
-	min-width: 85%;
-	min-height: 40px;
-	pointer-events: all;
+input::-webkit-input-placeholder {
+	color: $cta-background;
+}
+input::-moz-placeholder {
+	color: $cta-background;
+}
+input:-ms-input-placeholder {
+	color: $cta-background;
+}
+input:-moz-placeholder {
+	color: $cta-background;
+}
+
+.credentials[type='text'],
+.credentials[type='password'] {
+	margin: 2%;
+	padding: 2%;
+	width: 92%;
 	font-weight: 200;
+	border-radius: 7px;
+	font-size: 1.5em;
+	color: $cta-background;
+	background-color: $dropdown;
+}
+
+.half-width-input {
+	@extend .credentials[type='text'];
+	width: 42%;
+}
+
+input:not([type='checkbox']) {
+	border: none;
+	outline: none;
+}
+
+.form-submit-button {
+	visibility: hidden;
+}
+
+.register-form-error {
+	width: 92%;
+	margin: 10px auto;
+	padding: 10px;
+	border-radius: 7px;
+	background-color: orange;
+}
+
+#artist h5 {
+	margin: 5px 0;
+	color: $off-white;
+}
+
+#artist {
+	display: inline-block;
+	vertical-align: top;
 	text-align: center;
-	border-radius: 10px;
-	font-size: 1.5em;
-	background-color: $main-background;
-	color: $off-white;
-	border: 2px solid $dropdown;
+	margin: 10px;
+	padding: 0;
+	width: 100px;
 }
 
-input#subscribe-input[type='submit'] {
-	font-weight: 600;
-	background-color: $cta-background;
-	color: $main-background;
+.artist-icon {
+	background-color: $dropdown;
+	height: 100px;
+	width: 100px;
+	padding: 0;
+	clip-path: circle(50px at center);
 }
 
-input,
-textarea:focus {
-	border: 2px solid $dropdown;
-	outline: 0;
+.artist-icon:hover {
+	cursor: pointer;
+	box-shadow: 2px 1px 3px black;
 }
 
-input#subscribe-input[type='submit']:hover {
-	background-color: lighten($cta-background, 5%);
+.saved-artist-list {
+	width: fit-content;
+	display: block;
+	width: 100%;
+	height: 40px;
 }
 
-#thank-you-signature {
-	width: 150px;
+#artist-text {
+	color: white;
+	font-size: 10px;
+	display: inline-block;
+	padding: 5px 10px;
 }
 
-p.salutation {
-	width: 95%;
-	max-width: 800px;
-	margin: 5px auto;
-	font-size: 1.5em;
-	color: $off-white;
+#artist-icon-list {
+	position: relative;
+	display: flex;
+	overflow: scroll;
 }

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'activerecord'
 gem 'rest-client'
-gem 'omniauth-spotify'
+# gem 'omniauth-sbotify'
 gem "pg"
 gem "pry"
 gem "puma"
