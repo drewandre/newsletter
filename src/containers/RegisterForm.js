@@ -10,7 +10,7 @@ var zipcodeRegexp = /^\d{5}$|^\d{5}-\d{4}$/;
 var onlyIntegers = /^[0-9]*$/;
 var emailRegexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-class EmailForm extends Component {
+class RegisterForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -83,7 +83,11 @@ class EmailForm extends Component {
 				artists: this.state.artists,
 				genres: this.state.genres
 			};
-			this.props.addSubmissions(formPayLoad);
+			debugger;
+			fetch(`/register`, {
+				method: 'POST',
+				body: JSON.stringify(formPayload)
+			});
 			this.handleClearForm(event);
 		}
 	}
@@ -419,4 +423,4 @@ class EmailForm extends Component {
 	}
 }
 
-export default EmailForm;
+export default RegisterForm;

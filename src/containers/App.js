@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import EmailForm from './EmailForm';
-import SpotifyForm from './SpotifyForm';
-import SoundCloudForm from './SoundCloudForm';
 
 export default class App extends Component {
 	constructor(props) {
@@ -13,14 +10,14 @@ export default class App extends Component {
 	render() {
 		return (
 			<div className="sign-up">
-				<Link id="email-button" to="/email">
-					SIGN UP THROUGH EMAIL
-				</Link>
-				<Link id="spotify-button" to="/spotify">
+				<a href="/auth/spotify" id="spotify-button">
 					SIGN UP THROUGH SPOTIFY
-				</Link>
+				</a>
 				<Link id="soundcloud-button" to="/soundcloud">
 					SIGN UP THROUGH SOUNDCLOUD
+				</Link>
+				<Link id="email-button" to="/subscribe">
+					SIGN UP THROUGH EMAIL
 				</Link>
 			</div>
 		);

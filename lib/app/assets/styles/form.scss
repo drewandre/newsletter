@@ -23,16 +23,16 @@
 }
 
 input::-webkit-input-placeholder {
-	color: $cta-background;
+	color: $dropdown;
 }
 input::-moz-placeholder {
-	color: $cta-background;
+	color: $dropdown;
 }
 input:-ms-input-placeholder {
-	color: $cta-background;
+	color: $dropdown;
 }
 input:-moz-placeholder {
-	color: $cta-background;
+	color: $dropdown;
 }
 
 .credentials[type='text'],
@@ -44,8 +44,8 @@ input:-moz-placeholder {
 	letter-spacing: 2px;
 	border-radius: 7px;
 	font-size: 20px;
-	color: $cta-background;
-	background-color: $dropdown;
+	color: $dropdown;
+	background-color: $cta-background;
 	border: none;
 	outline: none;
 }
@@ -93,12 +93,6 @@ input::-webkit-inner-spin-button {
 
 #artist {
 	display: inline-block;
-	// vertical-align: top;
-	// text-align: center;
-	// margin: auto;
-	// padding: 0;
-	// width: 120px;
-	// height: 170px;
 }
 
 .artist-icon {
