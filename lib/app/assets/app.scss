@@ -3,11 +3,7 @@
 @import 'styles/mixins';
 @import 'styles/flash';
 @import 'styles/form';
-
-* {
-	margin: 0;
-	padding: 0;
-}
+@import 'styles/sign-up-buttons';
 
 body {
 	font-family: 'Montserrat', Fallback, Helvetica, sans-serif;

@@ -17,9 +17,11 @@ ActiveRecord::Schema.define(version: 20171220182125) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
-    t.string "full_name", null: false
-    t.string "zipcode", null: false
-    t.string "category", null: false
+    t.string "name", null: false
+    t.string "zipcode"
+    t.string "category"
+    t.string "top_artist_ids", array: true
+    t.string "top_genres", array: true
     t.integer "age", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
