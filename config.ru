@@ -1,3 +1,2 @@
-# require File.expand_path('app', File.dirname(__FILE__))
-#
-# run Newsletter
+require File.expand_path('lib/app', File.dirname(__FILE__))
+run Newsletter

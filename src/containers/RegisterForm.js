@@ -83,7 +83,6 @@ class RegisterForm extends Component {
 				artists: this.state.artists,
 				genres: this.state.genres
 			};
-			debugger;
 			fetch(`/register`, {
 				method: 'POST',
 				body: JSON.stringify(formPayload)
@@ -328,6 +327,11 @@ class RegisterForm extends Component {
 			artists: '',
 			genres: ''
 		});
+	}
+
+	componentWillMount() {
+		// if user_id in session, add to form
+		// else render blank form
 	}
 
 	render() {

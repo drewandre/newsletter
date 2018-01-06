@@ -16,3 +16,5 @@ gem "sinatra"
 gem "sinatra-activerecord"
 gem 'sinatra-contrib', :require => false
 gem "sinatra-flash"
+gem 'shotgun'
+gem 'thin'
