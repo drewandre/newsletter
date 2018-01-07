@@ -11,12 +11,13 @@ require 'sinatra/contrib'
 require 'sinatra/reloader'
 require 'sinatra/flash'
 require './lib/app/models/user.rb'
+require './env'
 
-begin
-  require './env' if File.exists?('env.rb')
-rescue LoadError
-  puts "Couldn't find env file"
-end
+# begin
+  # require './env' if File.exists?('env.rb')
+# rescue LoadError
+#   puts "Couldn't find env file"
+# end
 
 module RegistrationHelpers
 
@@ -57,7 +58,7 @@ class Newsletter < Sinatra::Base
     ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
     RSpotify.authenticate(ENV['SPOTIFY_ID'], ENV['SPOTIFY_SECRET'])
     set :sessions, true
-    set :server, :puma
+    # set :server, :puma
   end
   use OmniAuth::Builder do
     provider :spotify, ENV['SPOTIFY_ID'], ENV['SPOTIFY_SECRET'], scope: 'user-library-read user-read-birthdate user-read-email user-top-read user-read-recently-played'
