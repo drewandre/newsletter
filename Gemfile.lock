@@ -116,7 +116,6 @@ DEPENDENCIES
   pry
   puma
   rake
-  rest-client
   rspotify
   shotgun
   sinatra
