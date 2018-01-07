@@ -11,7 +11,8 @@ require 'sinatra/contrib'
 require 'sinatra/reloader'
 require 'sinatra/flash'
 require './lib/app/models/user.rb'
-require './env'
+binding.pry
+require './env.rb'
 
 # begin
   # require './env' if File.exists?('env.rb')
