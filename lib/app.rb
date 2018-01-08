@@ -58,7 +58,7 @@ class Newsletter < Sinatra::Base
     ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
     RSpotify.authenticate(ENV['SPOTIFY_ID'], ENV['SPOTIFY_SECRET'])
     set :sessions, true
-    set :server, :puma
+    # set :server, :puma
   end
   use OmniAuth::Builder do
     provider :spotify, ENV['SPOTIFY_ID'], ENV['SPOTIFY_SECRET'], scope: 'user-library-read user-read-birthdate user-read-email user-top-read user-read-recently-played'
@@ -73,7 +73,6 @@ class Newsletter < Sinatra::Base
   get '/auth/spotify/callback' do
     spotify_user_top_genres = []
     spotify_user_top_artist_ids = []
-    # spotify_user_top_artist_names = []
     JSON.pretty_generate(request.env['omniauth.auth'])
     spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
     spotify_user_age = get_age_from_spotify_birthday(spotify_user.birthdate)
@@ -83,7 +82,6 @@ class Newsletter < Sinatra::Base
     spotify_user_top_artists.each do |artist|
       spotify_user_top_genres.concat(artist.genres)
       spotify_user_top_artist_ids.push(artist.id)
-      # spotify_user_top_artist_names.push(artist.name)
     end
     spotify_user_top_genres = spotify_user_top_genres.uniq
     user = User.new(
