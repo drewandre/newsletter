@@ -1,2 +1,2 @@
-require File.expand_path('./lib/app', File.dirname(__FILE__))
+require './lib/app'
 run Newsletter
