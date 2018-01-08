@@ -14,7 +14,6 @@ require './lib/app/models/user.rb'
 
 begin
   require './env' if File.exists?('env.rb')
-  puts "found env"
 rescue LoadError
   puts "Couldn't find env file"
 end

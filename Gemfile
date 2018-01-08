@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'activerecord'
 gem 'httparty'
-# gem 'rest-gclient'
+# gem 'rest-client'
 gem 'json'
 gem "pg"
 gem "pry"
