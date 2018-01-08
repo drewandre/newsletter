@@ -4,17 +4,17 @@ gem 'activerecord'
 gem 'httparty'
 gem 'rest-client'
 gem 'json'
-gem "pg"
-gem "pry"
-gem "puma"
+gem 'pg'
+gem 'pry'
+gem 'puma'
 gem 'omniauth'
 gem 'omniauth-oauth2'
 gem 'omniauth-spotify'
-gem "rake"
+gem 'rake'
 gem 'rspotify'
-gem "sinatra"
-gem "sinatra-activerecord"
+gem 'sinatra'
+gem 'sinatra-activerecord'
 gem 'sinatra-contrib', :require => false
-gem "sinatra-flash"
+gem 'sinatra-flash'
 gem 'shotgun'
 gem 'thin'
