@@ -1,12 +1,13 @@
 require 'httparty'
 require 'json'
 require 'pry'
+require 'rest-client'
 require 'rspotify'
 require 'omniauth'
 require 'omniauth-spotify'
 require 'sinatra/base'
 require 'sinatra/activerecord'
-require "sinatra/namespace"
+require 'sinatra/namespace'
 require 'sinatra/contrib'
 require 'sinatra/reloader'
 require 'sinatra/flash'
@@ -57,7 +58,7 @@ class Newsletter < Sinatra::Base
     ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
     RSpotify.authenticate(ENV['SPOTIFY_ID'], ENV['SPOTIFY_SECRET'])
     set :sessions, true
-    # set :server, :puma
+    set :server, :puma
   end
   use OmniAuth::Builder do
     provider :spotify, ENV['SPOTIFY_ID'], ENV['SPOTIFY_SECRET'], scope: 'user-library-read user-read-birthdate user-read-email user-top-read user-read-recently-played'
