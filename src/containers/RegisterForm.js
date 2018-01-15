@@ -390,66 +390,64 @@ class RegisterForm extends Component {
 		}
 
 		return (
-			<div className="email-form-container">
-				<form onSubmit={this.handleFormSubmit}>
-					{errorDiv}
-					<TextInput
-						placeholder="first name"
-						name="firstName"
-						className="half-width-input"
-						value={this.state.firstName}
-						handlerFunction={this.handleFirstName}
-					/>
-					<TextInput
-						placeholder="last name"
-						name="lastName"
-						className="half-width-input"
-						value={this.state.lastName}
-						handlerFunction={this.handleLastName}
-					/>
-					<TextInput
-						placeholder="email"
-						name="email"
-						value={this.state.email}
-						handlerFunction={this.handleEmail}
-					/>
-					<TextInput
-						placeholder="age"
-						name="age"
-						inputType="number"
-						maxLength="2"
-						className="half-width-input"
-						value={this.state.age}
-						handlerFunction={this.handleAge}
-					/>
-					<TextInput
-						placeholder="zip"
-						name="zipcode"
-						maxLength="5"
-						className="half-width-input"
-						value={this.state.zipcode}
-						handlerFunction={this.handleZipcode}
-					/>
-					<Select
-						handlerFunction={this.handleSubscriberType}
-						name="subscriberType"
-						placeholder="what kind of listener are you?"
-						options={this.state.subscriberTypes}
-						selectedOption={this.state.subscriberType}
-					/>
-					<TextInput
-						placeholder="who are your favorite artists?"
-						name="artists"
-						handlerFunction={this.handleArtists}
-					/>
-					{artistList}
-					{artistIcons}
-					<div className="button-group">
-						<button className="form-submit-button" type="submit" />
-						<Link to="/">BACK</Link>
-					</div>
-				</form>
-			</div>
+			<form className="sign-up" onSubmit={this.handleFormSubmit}>
+				{errorDiv}
+				<TextInput
+					placeholder="first name"
+					name="firstName"
+					// className="half-width-input"
+					value={this.state.firstName}
+					handlerFunction={this.handleFirstName}
+				/>
+				<TextInput
+					placeholder="last name"
+					name="lastName"
+					// className="half-width-input"
+					value={this.state.lastName}
+					handlerFunction={this.handleLastName}
+				/>
+				<TextInput
+					placeholder="email"
+					name="email"
+					value={this.state.email}
+					handlerFunction={this.handleEmail}
+				/>
+				<TextInput
+					placeholder="age"
+					name="age"
+					inputType="number"
+					maxLength="2"
+					// className="half-width-input"
+					value={this.state.age}
+					handlerFunction={this.handleAge}
+				/>
+				<TextInput
+					placeholder="zip"
+					name="zipcode"
+					maxLength="5"
+					// className="half-width-input"
+					value={this.state.zipcode}
+					handlerFunction={this.handleZipcode}
+				/>
+				<Select
+					handlerFunction={this.handleSubscriberType}
+					name="subscriberType"
+					placeholder="what kind of listener are you?"
+					options={this.state.subscriberTypes}
+					selectedOption={this.state.subscriberType}
+				/>
+				<TextInput
+					placeholder="who are your favorite artists?"
+					name="artists"
+					handlerFunction={this.handleArtists}
+				/>
+				{artistList}
+				{artistIcons}
+				{/* <div className="button-group"> */}
+				{/* <button className="form-submit-button" type="submit" /> */}
+				{/* <Link to="/">BACK</Link> */}
+				{/* </div> */}
+			</form>
 		);
 	}
 }

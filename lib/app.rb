@@ -84,7 +84,7 @@ class Newsletter < Sinatra::Base
     JSON.pretty_generate(request.env['omniauth.auth'])
     spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
     spotify_user_age = get_age_from_spotify_birthday(spotify_user.birthdate)
-    spotify_user_top_artists = spotify_user.top_artists(limit: 20, offset: 0, time_range: 'medium_term')
+    spotify_user_top_artists = spotify_user.top_artists(limit: 20, offset: 0, time_range: 'long_term')
     spotify_user_top_artists.each do |artist|
       spotify_user_top_genres.concat(artist.genres)
       spotify_user_top_artist_images.push(artist.images[0]["url"])

@@ -6,8 +6,9 @@
 		@include center();
 		position: absolute;
 		width: 100%;
-		width: fit-content;
+		margin: 0 auto;
 		display: grid;
+		max-width: 400px;
 	}
 }
 
@@ -16,8 +17,9 @@
 		@include vertical-align();
 		position: absolute;
 		right: 10%;
-		width: fit-content;
+		width: 100%;
 		display: grid;
+		max-width: 400px;
 	}
 }
 
@@ -31,7 +33,8 @@
 	font-size: 12px;
 	font-weight: 700;
 	text-align: center;
-	margin: 10px;
+	width: 60%;
+	margin: 10px auto;
 	padding: 10px 30px;
 	border-radius: 50px;
 }

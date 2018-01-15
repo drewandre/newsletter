@@ -5,21 +5,13 @@
 	margin: 30px auto;
 }
 
-.sign-up {
-	@include vertical-align();
-	display: inline-grid;
-	text-align: center;
-}
-
 .email-form-container {
-	@include center();
-	text-align: center;
-	margin: 0;
+	margin: 0 auto;
 	padding: 0;
-	display: block;
+	postition: relative;
 	float: right;
+	display: block;
 	width: 100%;
-	max-width: 500px;
 }
 
 input::-webkit-input-placeholder {
@@ -36,10 +28,11 @@ input:-moz-placeholder {
 }
 
 .credentials[type='text'],
-.credentials[type='password'] {
-	margin: 2%;
-	padding: 4%;
-	width: 88%;
+.credentials[type='password'],
+.credentials[type='number'] {
+	margin: 1% auto;
+	padding: 2%;
+	width: 92%;
 	font-weight: 300;
 	letter-spacing: 2px;
 	border-radius: 7px;
@@ -56,12 +49,14 @@ select {
 	-moz-appearance: none;
 	appearance: none;
 	width: 96%;
+	margin-bottom: 1.5%;
 }
 
-.half-width-input {
-	@extend .credentials[type='text'];
-	width: 38%;
-}
+// .half-width-input {
+// 	@extend .credentials[type='text'];
+// 	display: inline-block;
+// 	width: 40%;
+// }
 
 input:not([type='checkbox']) {
 	border: none;
@@ -110,9 +105,8 @@ input::-webkit-inner-spin-button {
 // }
 
 .saved-artist-list {
-	display: block;
 	margin: 25px auto 12px auto;
-	width: 100%;
+	text-align: left;
 }
 
 #artist-text {
