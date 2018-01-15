@@ -35,7 +35,7 @@ class RegisterForm extends Component {
 			]
 		};
 
-		this.searchArtists = this.searchArtists.bind(this);
+		this.searchArtistsByName = this.searchArtistsByName.bind(this);
 		this.handleArtistSelect = this.handleArtistSelect.bind(this);
 		this.handleArtistDelete = this.handleArtistDelete.bind(this);
 
@@ -91,9 +91,9 @@ class RegisterForm extends Component {
 		}
 	}
 
-	searchArtists(artist) {
+	searchArtistsByName(artist_name) {
 		if (Date.now() - this.state.lastKeyPressedTime > 200) {
-			fetch(`/spotify/artists/${artist}`)
+			fetch(`/spotify/artists/${artist_name}`)
 				.then(response => {
 					if (response.ok) {
 						return response;
@@ -182,7 +182,7 @@ class RegisterForm extends Component {
 		this.setState({ lastKeyPressedTime: Date.now() });
 		var input = event.target.value.replace(stringWhiteSpaceTrim, '');
 		if (input != '') {
-			setTimeout(() => this.searchArtists(input), 200);
+			setTimeout(() => this.searchArtistsByName(input), 200);
 		}
 	}
 
@@ -294,7 +294,7 @@ class RegisterForm extends Component {
 			let errorState = this.state.errors;
 			delete errorState.artists;
 			this.setState({ errors: errorState });
-			this.searchArtists(artists);
+			this.searchArtistsByName(artists);
 			return true;
 		}
 	}
@@ -329,9 +329,36 @@ class RegisterForm extends Component {
 		});
 	}
 
-	componentWillMount() {
-		// if user_id in session, add to form
-		// else render blank form
+	componentDidMount() {
+		fetch(`/user`)
+			.then(response => {
+				if (response.ok) {
+					return response;
+				}
+			})
+			.then(response => response.json())
+			.then(user => {
+				var userPayload = [];
+				var artistPayload = [];
+				for (var i = 0; i < user.top_artist_ids.length; i++) {
+					artistPayload.push({
+						id: user.top_artist_ids[i],
+						name: user.top_artist_names[i],
+						images: user.top_artist_images[i]
+					});
+				}
+				userPayload.push(user, artistPayload);
+				return userPayload;
+			})
+			.then(userPayload => {
+				this.setState({
+					firstName: userPayload[0].name,
+					email: userPayload[0].email,
+					age: userPayload[0].age,
+					artists: userPayload[1],
+					genres: userPayload[0].top_genres
+				});
+			});
 	}
 
 	render() {

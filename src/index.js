@@ -3,8 +3,6 @@ import { render } from 'react-dom';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import App from './containers/App';
 import RegisterForm from './containers/RegisterForm';
-import SpotifyForm from './containers/SpotifyForm';
-import SoundCloudForm from './containers/SoundCloudForm';
 import '../lib/app/assets/app.scss';
 import '../lib/app/public/javascript/app.js';
 

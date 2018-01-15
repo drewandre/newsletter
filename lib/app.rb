@@ -1,9 +1,12 @@
 require 'httparty'
 require 'json'
 require 'pry'
+require 'pg'
 require 'rest-client'
 require 'rspotify'
+require 'rspotify/oauth'
 require 'omniauth'
+require 'omniauth-oauth2'
 require 'omniauth-spotify'
 require 'sinatra/base'
 require 'sinatra/activerecord'
@@ -57,11 +60,14 @@ class Newsletter < Sinatra::Base
   configure do
     ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
     RSpotify.authenticate(ENV['SPOTIFY_ID'], ENV['SPOTIFY_SECRET'])
-    set :sessions, true
-    # set :server, :puma
-  end
-  use OmniAuth::Builder do
-    provider :spotify, ENV['SPOTIFY_ID'], ENV['SPOTIFY_SECRET'], scope: 'user-library-read user-read-birthdate user-read-email user-top-read user-read-recently-played'
+    use OmniAuth::Builder do
+      provider :spotify, ENV['SPOTIFY_ID'], ENV['SPOTIFY_SECRET'], scope: 'user-read-private user-library-read user-read-birthdate user-read-email user-top-read user-read-recently-played'
+    end
+    RSpotify.raw_response = false
+    use Rack::Session::Cookie, :key => 'rack.session',
+                           :path => '/',
+                           :secret => 'your_secret'
+    enable :sessions
   end
 
   set :root, 'lib/app'
@@ -73,29 +79,43 @@ class Newsletter < Sinatra::Base
   get '/auth/spotify/callback' do
     spotify_user_top_genres = []
     spotify_user_top_artist_ids = []
+    spotify_user_top_artist_names = []
+    spotify_user_top_artist_images = []
     JSON.pretty_generate(request.env['omniauth.auth'])
     spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
     spotify_user_age = get_age_from_spotify_birthday(spotify_user.birthdate)
-    spotify_email = spotify_user.email
-    spotify_name = spotify_user.display_name
     spotify_user_top_artists = spotify_user.top_artists(limit: 20, offset: 0, time_range: 'medium_term')
     spotify_user_top_artists.each do |artist|
       spotify_user_top_genres.concat(artist.genres)
+      spotify_user_top_artist_images.push(artist.images[0]["url"])
       spotify_user_top_artist_ids.push(artist.id)
+      spotify_user_top_artist_names.push(artist.name)
     end
     spotify_user_top_genres = spotify_user_top_genres.uniq
     user = User.new(
-      name: spotify_name,
-      email: spotify_email,
+      name: spotify_user.display_name,
+      email: spotify_user.email,
       age: spotify_user_age,
       top_artist_ids: spotify_user_top_artist_ids,
+      top_artist_names: spotify_user_top_artist_names,
+      top_artist_images: spotify_user_top_artist_images,
       top_genres: spotify_user_top_genres
     )
     if user.save
-      # save into session
+      @@user_id = user.id
       redirect '/subscribe'
     else
-      puts "error saving user"
+      flash[:error] = "Error logging into Spotify!"
+      redirect '/'
+    end
+  end
+
+  get '/user' do
+    if @@user_id
+      @user = User.find(@@user_id)
+      return @user.to_json
+    else
+      return status 404
     end
   end
 
@@ -104,9 +124,8 @@ class Newsletter < Sinatra::Base
       content_type 'application/json'
     end
 
-    get '/artists/:artist' do
-      content_type :json
-      artists = RSpotify::Artist.search(params['artist'], limit: 4)
+    get '/artists/:artist_name' do
+      artists = RSpotify::Artist.search(params['artist_name'], limit: 4)
       return artists.to_json
     end
 

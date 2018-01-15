@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20171220182125) do
     t.string "zipcode"
     t.string "category"
     t.string "top_artist_ids", array: true
+    t.string "top_artist_names", array: true
+    t.string "top_artist_images", array: true
     t.string "top_genres", array: true
     t.integer "age", null: false
     t.datetime "created_at", null: false
