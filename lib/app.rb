@@ -111,11 +111,11 @@ class Newsletter < Sinatra::Base
   end
 
   get '/user' do
-    if @@user_id
+    begin
       @user = User.find(@@user_id)
       return @user.to_json
-    else
-      return status 404
+    rescue NameError => e
+      return false
     end
   end
 

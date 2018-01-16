@@ -3,13 +3,13 @@ import React from 'react';
 const TextInput = props => {
 	return (
 		<input
-			id="form-input"
+			id={props.error ? 'error' : null}
 			autoComplete="off"
 			name={props.name}
 			placeholder={props.placeholder}
 			autoFocus={props.autoFocus}
 			onChange={props.handlerFunction}
-			className={props.className}
+			className="credentials"
 			maxLength={props.maxLength}
 			type={props.inputType}
 			value={props.value}

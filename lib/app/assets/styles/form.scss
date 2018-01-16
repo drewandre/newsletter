@@ -5,6 +5,9 @@
 	margin: 30px auto;
 }
 
+#error {
+	box-shadow: 0 0 10px $error;
+}
 .email-form-container {
 	margin: 0 auto;
 	padding: 0;
@@ -15,16 +18,16 @@
 }
 
 input::-webkit-input-placeholder {
-	color: $dropdown;
+	color: $off-white;
 }
 input::-moz-placeholder {
-	color: $dropdown;
+	color: $off-white;
 }
 input:-ms-input-placeholder {
-	color: $dropdown;
+	color: $off-white;
 }
 input:-moz-placeholder {
-	color: $dropdown;
+	color: $off-white;
 }
 
 .credentials[type='text'],
@@ -33,12 +36,12 @@ input:-moz-placeholder {
 	margin: 1% auto;
 	padding: 2%;
 	width: 92%;
-	font-weight: 300;
+	font-weight: 200;
 	letter-spacing: 2px;
 	border-radius: 7px;
 	font-size: 20px;
-	color: $dropdown;
-	background-color: $cta-background;
+	color: #fff;
+	background-color: $dropdown;
 	border: none;
 	outline: none;
 }
@@ -51,12 +54,6 @@ select {
 	width: 96%;
 	margin-bottom: 1.5%;
 }
-
-// .half-width-input {
-// 	@extend .credentials[type='text'];
-// 	display: inline-block;
-// 	width: 40%;
-// }
 
 input:not([type='checkbox']) {
 	border: none;
@@ -110,8 +107,9 @@ input::-webkit-inner-spin-button {
 }
 
 #artist-text {
-	background: $cta-background;
-	color: $main-background;
+	background: $dropdown;
+	color: #fff;
+	border: 1px solid $cta-background;
 	margin: 0 2% 2% 2%;
 	border-radius: 5px;
 	font-size: 16px;

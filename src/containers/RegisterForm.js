@@ -62,7 +62,9 @@ class RegisterForm extends Component {
 	}
 
 	handleFormSubmit(event) {
-		event.preventDefault();
+		if (event) {
+			event.preventDefault();
+		}
 		if (
 			this.validateFirstName(this.state.firstName) &&
 			this.validateLastName(this.state.lastName) &&
@@ -194,7 +196,7 @@ class RegisterForm extends Component {
 
 	validateFirstName(firstName) {
 		if (firstName === '') {
-			let newError = { firstName: 'First name field may not be blank' };
+			let newError = { firstName: null };
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
 		} else {
@@ -207,7 +209,7 @@ class RegisterForm extends Component {
 
 	validateLastName(lastName) {
 		if (lastName === '') {
-			let newError = { lastName: 'Last name field may not be blank' };
+			let newError = { lastName: null };
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
 		} else {
@@ -220,7 +222,7 @@ class RegisterForm extends Component {
 
 	validateEmail(email) {
 		if (email === '') {
-			let newError = { email: 'Email field may not be blank' };
+			let newError = { email: null };
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
 		} else if (!email.match(emailRegexp)) {
@@ -240,7 +242,7 @@ class RegisterForm extends Component {
 			age = age.slice(1, age.length);
 		}
 		if (age === '') {
-			let newError = { age: 'Age field may not be blank' };
+			let newError = { age: null };
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
 		} else {
@@ -253,7 +255,7 @@ class RegisterForm extends Component {
 
 	validateZipcode(zipcode) {
 		if (zipcode === '') {
-			let newError = { zipcode: 'Zipcode field may not be blank' };
+			let newError = { zipcode: null };
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
 		} else if (!zipcode.match(zipcodeRegexp)) {
@@ -271,7 +273,7 @@ class RegisterForm extends Component {
 	validateSubscriberType(subscriberType) {
 		if (subscriberType === '') {
 			let newError = {
-				subscriberType: 'Subscriber type field may not be blank'
+				subscriberType: null
 			};
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
@@ -286,7 +288,7 @@ class RegisterForm extends Component {
 	validateArtists(artists) {
 		if (artists === '') {
 			let newError = {
-				artists: 'Artists list may not be blank'
+				artists: null
 			};
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
@@ -302,7 +304,7 @@ class RegisterForm extends Component {
 	validateGenres(genres) {
 		if (genres === '') {
 			let newError = {
-				genres: 'Genres list may not be blank'
+				genres: null
 			};
 			this.setState({ errors: Object.assign(this.state.errors, newError) });
 			return false;
@@ -334,6 +336,8 @@ class RegisterForm extends Component {
 			.then(response => {
 				if (response.ok) {
 					return response;
+				} else {
+					return null;
 				}
 			})
 			.then(response => response.json())
@@ -358,6 +362,13 @@ class RegisterForm extends Component {
 					artists: userPayload[1],
 					genres: userPayload[0].top_genres
 				});
+				return userPayload;
+			})
+			.then(userPayload => {
+				this.handleFormSubmit(false);
+			})
+			.catch(function(error) {
+				console.log('no user found');
 			});
 	}
 
@@ -367,10 +378,15 @@ class RegisterForm extends Component {
 		let errorDiv;
 		let errorItems;
 		if (Object.keys(this.state.errors).length > 0) {
-			errorItems = Object.values(this.state.errors).map(error => {
-				return <div key={error}>{error}</div>;
+			var errorArray = Object.values(this.state.errors).filter(error => {
+				return error != null;
 			});
-			errorDiv = <div className="register-form-error">{errorItems}</div>;
+			if (errorArray.length != 0) {
+				errorItems = errorArray.map(error => {
+					return <div key={error}>{error}</div>;
+				});
+				errorDiv = <div className="landing-page-form-errors">{errorItems}</div>;
+			}
 		}
 		if (this.state.searchedArtists.length > 0) {
 			artistIcons = (
@@ -393,43 +409,45 @@ class RegisterForm extends Component {
 			<form className="sign-up" onSubmit={this.handleFormSubmit}>
 				{errorDiv}
 				<TextInput
+					error={Object.keys(this.state.errors).includes('firstName')}
 					placeholder="first name"
 					name="firstName"
-					// className="half-width-input"
 					value={this.state.firstName}
 					handlerFunction={this.handleFirstName}
 				/>
 				<TextInput
+					error={Object.keys(this.state.errors).includes('lastName')}
 					placeholder="last name"
 					name="lastName"
-					// className="half-width-input"
 					value={this.state.lastName}
 					handlerFunction={this.handleLastName}
 				/>
 				<TextInput
+					error={Object.keys(this.state.errors).includes('email')}
 					placeholder="email"
 					name="email"
 					value={this.state.email}
 					handlerFunction={this.handleEmail}
 				/>
 				<TextInput
+					error={Object.keys(this.state.errors).includes('age')}
 					placeholder="age"
 					name="age"
 					inputType="number"
 					maxLength="2"
-					// className="half-width-input"
 					value={this.state.age}
 					handlerFunction={this.handleAge}
 				/>
 				<TextInput
+					error={Object.keys(this.state.errors).includes('zipcode')}
 					placeholder="zip"
 					name="zipcode"
 					maxLength="5"
-					// className="half-width-input"
 					value={this.state.zipcode}
 					handlerFunction={this.handleZipcode}
 				/>
 				<Select
+					error={Object.keys(this.state.errors).includes('subscriberType')}
 					handlerFunction={this.handleSubscriberType}
 					name="subscriberType"
 					placeholder="what kind of listener are you?"
@@ -437,8 +455,9 @@ class RegisterForm extends Component {
 					selectedOption={this.state.subscriberType}
 				/>
 				<TextInput
-					placeholder="who are your favorite artists?"
+					error={Object.keys(this.state.errors).includes('artists')}
 					name="artists"
+					placeholder="who are your favorite artists?"
 					handlerFunction={this.handleArtists}
 				/>
 				{artistList}
